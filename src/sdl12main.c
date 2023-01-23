@@ -54,8 +54,6 @@ static int scale = 1;
 static int scale = 2;
 #elif defined (NGAGE_DEBUG)
 static int scale = 3;
-#elif defined (__PSP__)
-static int scale = 2;
 #else
 static int scale = 4;
 #endif
