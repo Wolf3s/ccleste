@@ -1,0 +1,38 @@
+name: PS2 Build
+
+on: [push, pull_request]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  psp:
+    name: Build (PS2)
+    runs-on: ubuntu-latest
+    container: ps2dev/ps2dev:latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install build dependencies
+        run: |
+          apk update
+          apk add gmp mpc1 mpfr4 make cmake
+
+      - name: Configure project
+        run: |
+          cmake -S . \
+                -B build \
+                -DCMAKE_TOOLCHAIN_FILE=$PS2DEV/ps2sdk/ps2dev.cmake \
+                -D CMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} \
+                -D CELESTE_P8_ENABLE_AUDIO=ON
+
+      - name: Build project
+        run: cmake --build build --config ${{ env.BUILD_TYPE }}
+
+      - name: Upload application
+        uses: actions/upload-artifact@v3
+        with:
+          name: PS2_build
+          path: export/*
+          if-no-files-found: error
