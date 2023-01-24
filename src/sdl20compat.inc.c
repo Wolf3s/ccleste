@@ -15,7 +15,7 @@ static SDL_Texture*  sdl2_screen_tex = NULL;
 static SDL_Window*   sdl2_window     = NULL;
 static SDL_Renderer* sdl2_rendr      = NULL;
 
-#if defined (__NGAGE__) || defined (NGAGE_DEBUG) || defined(__3DS__) || defined(__PSP__)
+#if defined (__NGAGE__) || defined (NGAGE_DEBUG) || defined(__3DS__) || defined(__PSP__) || defined(__PS2__)
 static SDL_Texture* frame = NULL;
 #endif
 
@@ -66,7 +66,7 @@ static SDL_Surface *SDL_SetVideoMode(int width, int height, int bpp, Uint32 flag
         if (0)
         {
         die:
-#if defined (__NGAGE__) || defined (NGAGE_DEBUG) || defined(__3DS__) || defined(__PSP__)
+#if defined (__NGAGE__) || defined (NGAGE_DEBUG) || defined(__3DS__) || defined(__PSP__) || defined(__PS2__)
             if (frame)
             {
                 SDL_DestroyTexture(frame);
@@ -96,7 +96,7 @@ static SDL_Surface *SDL_SetVideoMode(int width, int height, int bpp, Uint32 flag
     #endif
     assert(sdl2_screen && sdl2_screen->format->BitsPerPixel == bpp);
 
-#if defined (__NGAGE__) || defined (NGAGE_DEBUG) || defined (__PSP__) || defined (__3DS__)
+#if defined (__NGAGE__) || defined (NGAGE_DEBUG) || defined (__PSP__) || defined (__3DS__) || defined(__PS2__)
     {
 #if defined (__NGAGE__)
         SDL_Surface* frame_sf = SDL_LoadBMP("E:\\System\\Apps\\Celeste\\data\\frame_ngage.bmp");
@@ -181,13 +181,16 @@ static void SDL_Flip(SDL_Surface* screen)
 #elif defined (__PSP__)
     SDL_Rect source = { 0, 0, 256, 256 };
     SDL_Rect dest   = { 112, 8, 256, 256 };
+#elif defined (__PS2__)
+    SDL_Rect source = { 0, 0, 384, 384 };
+    SDL_Rect dest   = { 128, 48, 384, 384 };
 #endif
 
     assert(screen == sdl2_screen);
     assert(sdl2_window != NULL);
     SDL_UpdateTexture(sdl2_screen_tex, NULL, screen->pixels, screen->pitch);
     SDL_SetRenderDrawColor(sdl2_rendr, 0, 0, 0, 255);
-#if defined (__NGAGE__) || defined (NGAGE_DEBUG) || defined (__3DS__) || defined (__PSP__)
+#if defined (__NGAGE__) || defined (NGAGE_DEBUG) || defined (__3DS__) || defined (__PSP__) || defined (__PS2__)
     SDL_RenderCopy(sdl2_rendr, frame, NULL, NULL);
     SDL_RenderCopy(sdl2_rendr, sdl2_screen_tex, &source, &dest);
 #else

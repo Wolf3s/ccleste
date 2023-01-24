@@ -29,7 +29,7 @@ include(get_SDL2)
 
 get_SDL2("2.26.0")
 
-if(NOT BUILD_FOR_NOKIA_NGAGE AND NOT PSP AND CELESTE_P8_ENABLE_AUDIO)
+if(NOT BUILD_FOR_NOKIA_NGAGE AND NOT PSP AND NOT PS2 AND CELESTE_P8_ENABLE_AUDIO)
   get_SDL2_mixer("2.6.2")
 endif()
 
@@ -66,6 +66,18 @@ if(PSP AND CELESTE_P8_ENABLE_AUDIO)
     vorbis
     ogg
     xmp
+  )
+endif()
+
+if (PS2)
+  set_target_properties(${PROJECT_TITLE} PROPERTIES LINKER_LANGUAGE CXX)
+endif()
+
+if(PS2 AND CELESTE_P8_ENABLE_AUDIO)
+  set(SDL2_MIXER_LIBS
+    SDL2_mixer
+    xmp
+    modplug
   )
 endif()
 
