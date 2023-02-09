@@ -48,10 +48,8 @@ Mix_Music*   mus[6]  = {NULL};
 #define PICO8_W 128
 #define PICO8_H 128
 
-#if defined (__NGAGE__) || defined (__3DS__)
+#if defined (__NGAGE__) || defined (__3DS__) || defined (__PSP__)
 static int scale = 1;
-#elif defined (__PSP__)
-static int scale = 2;
 #elif defined (NGAGE_DEBUG) || defined (__PS2__)
 static int scale = 3;
 #else

@@ -87,10 +87,8 @@ static SDL_Surface *SDL_SetVideoMode(int width, int height, int bpp, Uint32 flag
             return NULL;
         }
     }
-    #if defined(__3DS__)
+    #if defined(__3DS__) || defined(__PSP__)
     sdl2_screen = SDL_CreateRGBSurfaceWithFormat(0, 128, 128, SDL_BITSPERPIXEL(format), format);
-	#elif defined(__PSP__)
-    sdl2_screen = SDL_CreateRGBSurfaceWithFormat(0, 256, 256, SDL_BITSPERPIXEL(format), format);
     #else
     sdl2_screen = SDL_CreateRGBSurfaceWithFormat(0, width, height, SDL_BITSPERPIXEL(format), format);
     #endif
@@ -179,7 +177,7 @@ static void SDL_Flip(SDL_Surface* screen)
     SDL_Rect source = { 0, 0, 128, 128 };
     SDL_Rect dest   = { 80, 0, 240, 240 };
 #elif defined (__PSP__)
-    SDL_Rect source = { 0, 0, 256, 256 };
+    SDL_Rect source = { 0, 0, 128, 128 };
     SDL_Rect dest   = { 112, 8, 256, 256 };
 #elif defined (__PS2__)
     SDL_Rect source = { 0, 0, 384, 384 };
