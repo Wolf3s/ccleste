@@ -17,7 +17,19 @@ jobs:
       - name: Install build dependencies
         run: |
           apk update
-          apk add cmake
+          apk add cmake git
+      
+      # To be removed once the fjtrujy fork is part of PSPDEV
+      - name: Install fjtrujy SDL2 fork
+        run: |
+          git clone -b pspRefactorRender https://github.com/fjtrujy/SDL.git
+          cd SDL
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_TOOLCHAIN_FILE=$PSPDEV/psp/share/pspdev.cmake  -DCMAKE_INSTALL_PREFIX=$PSPDEV/psp \
+            -DBUILD_SHARED_LIBS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=OFF -DSDL_TESTS=OFF ..
+          make -j $(getconf _NPROCESSORS_ONLN)
+          make -j $(getconf _NPROCESSORS_ONLN) install
 
       - name: Configure project
         run: |
@@ -32,13 +44,31 @@ jobs:
 
       - name: Move files together
         run: |
-          mkdir output
-          cp build/EBOOT.PBP build/PARAM.SFO output
-          cp -r export/data output
+          mkdir ccleste
+          cp build/EBOOT.PBP build/PARAM.SFO ccleste
+          cp -r export/data ccleste
 
       - name: Upload application
         uses: actions/upload-artifact@v3
         with:
           name: PSP_build
-          path: output/*
+          path: ccleste/*
           if-no-files-found: error
+
+      - name: Extract tag name
+        if: startsWith(github.ref, 'refs/tags/')
+        id: tag
+        run: |
+          echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
+
+      - name: Prepare release
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          tar -zcvf ccleste_psp-${{ steps.tag.outputs.VERSION }}.tar.gz ccleste
+
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ccleste_psp-${{ steps.tag.outputs.VERSION }}.tar.gz
+          tag_name: ${{ steps.tag.outputs.VERSION }}
