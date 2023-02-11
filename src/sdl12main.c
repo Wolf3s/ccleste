@@ -56,11 +56,7 @@ static int scale = 3;
 static int scale = 4;
 #endif
 
-#if defined (__PSP__)
-#define AUDIO_FREQ 44100
-#else
 #define AUDIO_FREQ 22050
-#endif
 
 static const SDL_Color base_palette[16] =
 {
