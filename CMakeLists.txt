@@ -76,8 +76,29 @@ endif()
 if(PS2 AND CELESTE_P8_ENABLE_AUDIO)
   set(SDL2_MIXER_LIBS
     SDL2_mixer
+    atomic
+    ogg
+    opus
+    opusfile
+    vorbis
+    vorbisfile
     xmp
     modplug
+    mikmod
+    stdc++
+    m
+    debug
+    c
+    gskit
+    dmakit
+    dma
+    ps2_drivers
+    pthread
+    pthreadglue
+    profglue
+    patches
+    config
+    draw
   )
 endif()
 
