@@ -12,7 +12,7 @@ jobs:
     container: pspdev/pspdev:latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install build dependencies
         run: |
@@ -45,11 +45,11 @@ jobs:
       - name: Move files together
         run: |
           mkdir ccleste
-          cp build/EBOOT.PBP build/PARAM.SFO ccleste
+          cp export/EBOOT.PBP ccleste
           cp -r export/data ccleste
 
       - name: Upload application
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: PSP_build
           path: ccleste/*

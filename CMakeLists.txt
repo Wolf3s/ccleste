@@ -62,10 +62,12 @@ endif()
 if(PSP AND CELESTE_P8_ENABLE_AUDIO)
   set(SDL2_MIXER_LIBS
     SDL2_mixer
+    modplug
     vorbisfile
     vorbis
     ogg
     xmp
+    stdc++
   )
 endif()
 

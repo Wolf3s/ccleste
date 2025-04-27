@@ -12,10 +12,10 @@ jobs:
     container: devkitpro/devkitarm:latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Checkout SDL2
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: libsdl-org/SDL
           path: .github/SDL
@@ -56,7 +56,7 @@ jobs:
         run: cmake --build build --config ${{ env.BUILD_TYPE }}
 
       - name: Upload application
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: 3DS_build
           path: build/ccleste.3dsx
