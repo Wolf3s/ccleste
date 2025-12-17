@@ -48,6 +48,7 @@ add_executable(${PROJECT_TITLE} ${GUI_TYPE} ${project_sources})
 
 set_target_properties(${PROJECT_TITLE} PROPERTIES C_STANDARD 90 CXX_STANDARD 11)
 
+
 target_include_directories(
   ${PROJECT_TITLE}
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src

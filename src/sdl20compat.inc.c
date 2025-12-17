@@ -181,7 +181,7 @@ static void SDL_Flip(SDL_Surface* screen)
     SDL_Rect dest   = { 112, 8, 256, 256 };
 #elif defined (__PS2__)
     SDL_Rect source = { 0, 0, 384, 384 };
-    SDL_Rect dest   = { 128, 48, 384, 384 };
+    SDL_Rect dest   = { 88, 89, 465, 299 };
 #endif
 
     assert(screen == sdl2_screen);
